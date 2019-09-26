@@ -1,6 +1,8 @@
 # Snakes step-by-step
 Juego hecho con `Vue.js`
 
+Demo online (multiplayer): http://bit.ly/snakes-ort
+
 ## Objetivos
 
 ### 1er paso
