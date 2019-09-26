@@ -11,13 +11,15 @@ class Position {
   }
 
   /**
+   *
    * Genera posiciones al azar
    *
    * @param {*} maxX
    * @param {*} maxY
-   * @param {*} except Cualquier posición, excepto esta
+   * @param options { except: Cualquier posición, excepto esta}
+   * @returns {Position|Position|Position}
    */
-  static getRandom(maxX, maxY, except = null) {
+  static getRandom(maxX, maxY, options = {}) {
     const min = 0;
 
     const position = new Position(
@@ -25,8 +27,9 @@ class Position {
         Math.floor(Math.random() * (maxY - min)) + min
     );
 
+    const { except } = options;
     if(except && position.x === except.x && position.y === except.y) {
-        return Position.getRandom(maxX, maxY, except = null);
+        return Position.getRandom(maxX, maxY, { except });
     }
 
     return position;
@@ -34,6 +37,10 @@ class Position {
 
   static add(pos1, pos2) {
     return new Position(pos1.x + pos2.x, pos1.y + pos2.y);
+  }
+
+  static compare(pos1, pos2) {
+    return pos1.x === pos2.x && pos1.y === pos2.y;
   }
 }
 

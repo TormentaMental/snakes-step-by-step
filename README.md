@@ -14,6 +14,11 @@ Juego hecho con `Vue.js`
 ### 3er paso
 - mover la serpiente con el teclado
 
+### 4er paso
+- componentizar el escenario, la serpiente y la manzana
+- eventos de colisión
+- mensajes de feedback en pantalla
+
 ## Como correr el proyecto
 
 Instalar dependencias:

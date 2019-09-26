@@ -1,23 +1,18 @@
 <template>
   <div id="app">
-    <section class="canvas" v-bind:style="{
-        width: scene.dimensions.width + 'px',
-        height: scene.dimensions.height + 'px'
-      }">
-      <block :position="snake.position"
-             :color="snake.color"
-             :size="snake.size"
-      ></block>
-      <block :position="apple.position"
-             :color="apple.color"
-             :size="apple.size"
-      ></block>
-    </section>
+    <div class="message">{{message}}</div>
+    <Scene
+       v-bind:dimensions="scene.dimensions"
+       v-bind:snake="snake"
+       v-bind:apple="apple"
+       v-on:wall-collision="handleCollision"
+       v-on:apple-eaten="handleFruitEaten">
+    </Scene>
   </div>
 </template>
 
 <script>
-import Block from './components/Block';
+import Scene from './components/Scene';
 import Position from './services/position';
 import Keyboard from './services/keyboard';
 
@@ -40,21 +35,23 @@ export default {
     const { width, height } = config.dimensions;
     const blockSize = config.blockSize;
 
+    const snakePosition = Position.getRandom(width - blockSize, height - blockSize);
+
     return {
       snake: {
         color: 'white',
-        position: Position.getRandom(width - blockSize, height - blockSize),
+        position: snakePosition,
         size: blockSize,
-        speed: 10
+        speed: blockSize
       },
       apple: {
-        color: 'red',
-        position: Position.getRandom(width - blockSize, height - blockSize),
+        position: Position.getRandom(width - blockSize, height - blockSize, { except: snakePosition }),
         size: blockSize
       },
       scene: {
         dimensions: config.dimensions
       },
+      message: ""
     }
   },
   methods: {
@@ -80,22 +77,54 @@ export default {
         this.snake.position,
         direction
       );
-    }
+    },
+    handleCollision() {
+      this.message = "Oh no! Game over";
+      this.snake.speed = 0;
+    },
+    handleFruitEaten() {
+      this.displayTemporalMessage("Yum!");
+
+      const { width, height } = config.dimensions;
+      this.apple.position = Position.getRandom(
+        width - this.apple.size,
+        height - this.apple.size,
+        { except: this.snake.position }
+      );
+    },
+    displayTemporalMessage(message) {
+      this.message = message;
+
+      // clear up message if no other message was displayed after
+      setTimeout(() => {
+        if(this.message === message) {
+          this.message = "";
+        }
+      }, 2000);
+    },
   },
   components: {
-    Block
+    Scene
   }
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
 body {
   background: #1D1E22;
 }
 
-.canvas {
-  background: #379452;
+.message {
+  font-family: 'Raleway', sans-serif;
+  color: white;
+  font-size: 20px;
+  width: 800px;
+  height: 40px;
+  line-height: 40px;
+  text-align: left;
+  padding: 0;
   margin: 0 auto;
-  position: relative;
 }
 </style>
