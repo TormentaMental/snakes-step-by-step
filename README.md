@@ -7,6 +7,10 @@ Juego hecho con `Vue.js`
 - html básico
 - componente `Block` reutilizable 
 
+### 2do paso
+- objeto `config` para hacer las dimensiones configurables
+- objeto `position` para generar posiciones al azar
+
 ## Como correr el proyecto
 
 Instalar dependencias:

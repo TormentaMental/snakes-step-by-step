@@ -1,36 +1,52 @@
 <template>
   <div id="app">
-    <section class="canvas">
+    <section class="canvas" v-bind:style="{
+        width: scene.dimensions.width + 'px',
+        height: scene.dimensions.height + 'px'
+      }">
       <block :position="snake.position"
              :color="snake.color"
+             :size="snake.size"
       ></block>
       <block :position="apple.position"
              :color="apple.color"
+             :size="apple.size"
       ></block>
     </section>
   </div>
 </template>
 
 <script>
-import Block from './components/Block'
+import Block from './components/Block';
+import Position from './position';
+
+const config = {
+  dimensions: {
+    width: 800,
+    height: 450
+  },
+  blockSize: 10
+};
 
 export default {
   name: 'app',
   data: function() {
+    const { width, height } = config.dimensions;
+    const blockSize = config.blockSize;
+
     return {
       snake: {
         color: 'white',
-        position: {
-          x: 50,
-          y: 50
-        }
+        position: Position.getRandom(width - blockSize, height - blockSize),
+        size: blockSize
       },
       apple: {
         color: 'red',
-        position: {
-          x: 250,
-          y: 250
-        }
+        position: Position.getRandom(width - blockSize, height - blockSize),
+        size: blockSize
+      },
+      scene: {
+        dimensions: config.dimensions
       }
     }
   },
@@ -46,8 +62,6 @@ body {
 }
 
 .canvas {
-  width: 800px;
-  height: 450px;
   background: #379452;
   margin: 0 auto;
   position: relative;
