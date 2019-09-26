@@ -18,7 +18,8 @@
 
 <script>
 import Block from './components/Block';
-import Position from './position';
+import Position from './services/position';
+import Keyboard from './services/keyboard';
 
 const config = {
   dimensions: {
@@ -30,6 +31,11 @@ const config = {
 
 export default {
   name: 'app',
+  created: function() {
+    // inicializacion del servicio de teclado
+    const onKeyPressed = this.move;
+    new Keyboard(onKeyPressed);
+  },
   data: function() {
     const { width, height } = config.dimensions;
     const blockSize = config.blockSize;
@@ -38,7 +44,8 @@ export default {
       snake: {
         color: 'white',
         position: Position.getRandom(width - blockSize, height - blockSize),
-        size: blockSize
+        size: blockSize,
+        speed: 10
       },
       apple: {
         color: 'red',
@@ -47,7 +54,32 @@ export default {
       },
       scene: {
         dimensions: config.dimensions
+      },
+    }
+  },
+  methods: {
+    move(keyName) {
+      const speed  = this.snake.speed;
+      const direction = new Position();
+
+      if(keyName === "up") {
+        direction.y -= speed;
       }
+      if(keyName === "down") {
+        direction.y += speed;
+      }
+      if(keyName === "left") {
+        direction.x -= speed;
+      }
+      if(keyName === "right") {
+        direction.x += speed;
+      }
+
+      // reemplazo la posición anterior
+      this.snake.position = Position.add(
+        this.snake.position,
+        direction
+      );
     }
   },
   components: {

@@ -11,6 +11,9 @@ Juego hecho con `Vue.js`
 - objeto `config` para hacer las dimensiones configurables
 - objeto `position` para generar posiciones al azar
 
+### 3er paso
+- mover la serpiente con el teclado
+
 ## Como correr el proyecto
 
 Instalar dependencias:
