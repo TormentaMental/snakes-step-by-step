@@ -1,28 +1,55 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <section class="canvas">
+      <block :position="snake.position"
+             :color="snake.color"
+      ></block>
+      <block :position="apple.position"
+             :color="apple.color"
+      ></block>
+    </section>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Block from './components/Block'
 
 export default {
   name: 'app',
+  data: function() {
+    return {
+      snake: {
+        color: 'white',
+        position: {
+          x: 50,
+          y: 50
+        }
+      },
+      apple: {
+        color: 'red',
+        position: {
+          x: 250,
+          y: 250
+        }
+      }
+    }
+  },
   components: {
-    HelloWorld
+    Block
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  background: #1D1E22;
+}
+
+.canvas {
+  width: 800px;
+  height: 450px;
+  background: #379452;
+  margin: 0 auto;
+  position: relative;
 }
 </style>

@@ -1,29 +1,20 @@
-# snakes-by-steps
+# Snakes step-by-step
+Juego hecho con `Vue.js`
 
-## Project setup
+## Objetivos
+
+### 1er paso
+- html básico
+- componente `Block` reutilizable 
+
+## Como correr el proyecto
+
+Instalar dependencias:
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+Y luego, levantar un servidor:
 ```
-yarn run serve
+yarn serve
 ```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
